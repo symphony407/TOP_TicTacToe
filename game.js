@@ -78,3 +78,13 @@ function makeMove(index) {
             }
     }
 }
+
+const cells = document.querySelectorAll(".cell");
+
+cells.forEach(cell => {
+    cell.addEventListener("click", () => {
+        const index = cell.getAttribute("data-index");
+        makeMove(index);
+        cell.textContent = board[index];
+    });
+});
