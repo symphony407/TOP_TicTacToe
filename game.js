@@ -32,6 +32,8 @@ function makeMove(index) {
     } else {
         currentPlayer = "X";
     }
+    document.getElementById("status").textContent = 
+    "Current Player: " + currentPlayer;
 }
 
 function checkWinner() {
@@ -45,9 +47,11 @@ function checkWinner() {
         ) {
             console.log(board[a] + " wins");
             gameOver = true;
+            document.getElementById("status").textContent = board[a] + " wins!";
             return;
         }
     }
+    
 }
 
 const cells = document.querySelectorAll(".cell");
@@ -64,4 +68,17 @@ cells.forEach(cell => {
     });
 });
 
-document.getElementById("status").textContent = board[a] + " wins!";
+document.getElementById("restart").addEventListener("click", () => {
+    for (let i = 0; i < board.length; i++) {
+        board[i] = "";
+    }
+
+    document.querySelectorAll(".cell").forEach(cell => {
+        cell.textContent = "";
+    });
+
+    currentPlayer = "X";
+    gameOver = false;
+
+    document.getElementById("status").textContent = "Current Player: X";
+});
