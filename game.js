@@ -25,13 +25,19 @@ function makeMove(index) {
 
     board[index] = currentPlayer;
 
-    checkWinner();
+    if (checkWinner()) return;
 
-    if (currentPlayer === "X") {
-        currentPlayer = "O";
-    } else {
-        currentPlayer = "X";
-    }
+if (checkDraw()) {
+    document.getElementById("status").textContent = "It's a draw!";
+    gameOver = true;
+    return;
+}
+
+// switch player ONLY if game continues
+currentPlayer = currentPlayer === "X" ? "O" : "X";
+
+document.getElementById("status").textContent =
+    "Current Player: " + currentPlayer;
     document.getElementById("status").textContent = 
     "Current Player: " + currentPlayer;
 }
@@ -45,13 +51,16 @@ function checkWinner() {
             board[b] === board[c] &&
             board[a] !== ""
         ) {
-            console.log(board[a] + " wins");
-            gameOver = true;
             document.getElementById("status").textContent = board[a] + " wins!";
-            return;
+            gameOver = true;
+            return true;
         }
     }
-    
+    return false;
+}
+
+function checkDraw() {
+    return board.every(cell => cell !== "");
 }
 
 const cells = document.querySelectorAll(".cell");
